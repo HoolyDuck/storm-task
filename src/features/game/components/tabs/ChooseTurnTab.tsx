@@ -1,20 +1,32 @@
 import { Button } from "@/components/ui/button";
-import { PersonIcon } from "@radix-ui/react-icons";
-import { BotIcon } from "lucide-react";
+import { GameContext } from "../../context/GameContext";
+import { useCallback, useContext } from "react";
+
+const defaultSettings = {
+  matchAmount: 25,
+  turn: "player",
+};
 
 export const ChooseTurnTab = () => {
+  const { setGameSettings, setActiveTab } = useContext(GameContext);
+
+  const handleTurn = useCallback(
+    (turn: "player" | "computer") => {
+      setGameSettings({
+        ...defaultSettings,
+        turn,
+      });
+      setActiveTab("game");
+    },
+    [setGameSettings, setActiveTab]
+  );
+
   return (
-    <div>
-      <h2>Who starts first?</h2>
-      <div>
-        <Button>
-          <PersonIcon />
-          Player
-        </Button>
-        <Button>
-          <BotIcon />
-          Computer
-        </Button>
+    <div className="flex flex-col items-center">
+      <h2 className="text-2xl font-bold mb-4">Who starts?</h2>
+      <div className="flex space-x-4">
+        <Button onClick={() => handleTurn("player")}>🧑 Me</Button>
+        <Button onClick={() => handleTurn("computer")}>🤖 Computer</Button>
       </div>
     </div>
   );

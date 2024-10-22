@@ -3,15 +3,11 @@ import { HomeTab } from "./components/tabs/HomeTab";
 import { GameTab } from "./components/tabs/GameTab";
 import { ChooseTurnTab } from "./components/tabs/ChooseTurnTab";
 import { SettingsTab } from "./components/tabs/SettingsTab";
-import { useState } from "react";
-import { ActiveTab, CustomSettings } from "./types";
+import { useContext } from "react";
+import { GameContext } from "./context/GameContext";
 
 export const Game = () => {
-  const [activeTab, setActiveTab] = useState<ActiveTab>("home");
-  const [customSettings, setCustomSettings] = useState<CustomSettings>({
-    matchAmount: 25,
-    turn: "player",
-  });
+  const { activeTab, gameSettings: customSettings } = useContext(GameContext);
 
   return (
     <main

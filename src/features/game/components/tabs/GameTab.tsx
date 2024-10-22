@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { CustomSettings } from "../../types";
+import { GameSettings } from "../../utils/types";
 
-type GameTabProps = Partial<CustomSettings>;
+type GameTabProps = Partial<GameSettings>;
 
 export const GameTab = ({
   matchAmount = 25,
