@@ -4,6 +4,9 @@ export default {
     content: [],
   theme: {
   	extend: {
+		fontFamily: {
+			'sans': ['var(--font-sans)', 'sans-serif'],
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -54,5 +57,6 @@ export default {
   	}
   },
   plugins: [require("tailwindcss-animate")],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
 }
 
