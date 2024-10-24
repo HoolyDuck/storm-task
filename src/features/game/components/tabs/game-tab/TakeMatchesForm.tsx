@@ -11,29 +11,29 @@ export const TakeMatchesForm = ({
   handleMatchTake,
   disabled,
 }: TakeMatchesFormProps) => {
-  const [inputValue, setInputValue] = useState("");
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const inputValue = formData.get("matches") as string;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInputValue(value.replace(/\D/g, ""));
-  };
-
-  const handleButtonClick = () => {
     handleMatchTake(inputValue);
   };
 
   return (
-    <div className="flex gap-2">
+    <form
+      className="flex gap-2"
+      onSubmit={handleFormSubmit}
+    >
       <Input
-        value={inputValue}
-        onChange={handleInputChange}
+        type="number"
+        name="matches"
       />
       <Button
-        onClick={handleButtonClick}
+        type="submit"
         disabled={disabled}
       >
         Take
       </Button>
-    </div>
+    </form>
   );
 };
