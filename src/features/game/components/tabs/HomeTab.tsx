@@ -16,12 +16,15 @@ export const HomeTab = () => {
   }, [setActiveTab]);
 
   return (
-    <>
-      <h1 className={cn("text-4xl", "font-bold", "mb-4")}>🔥 Match Game 🔥</h1>
+    <div className={cn("flex", "flex-col", "items-center", "gap-2")}>
+      <h1 className={cn("text-4xl", "font-bold")}>🔥 Match Game 🔥</h1>
+      <p className="text-sm text-gray-500">
+        Take an even amount of matches to win!
+      </p>
       <div className={cn("flex", "space-x-4")}>
         <Button onClick={handleStartGame}>🎮 Start</Button>
         <Button onClick={handleCustomGame}>⚙️ Custom Game</Button>
       </div>
-    </>
+    </div>
   );
 };

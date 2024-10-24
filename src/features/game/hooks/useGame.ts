@@ -36,20 +36,29 @@ export const useGame = ({
         return;
       }
 
-      gameState.current.matches -= amount;
-      gameState.current[player ? "playerMatches" : "computerMatches"] += amount;
+      gameState.current.matches =
+        gameState.current.matches - amount > 0
+          ? gameState.current.matches - amount
+          : 0;
+
+      const lastTaken =
+        amount > gameState.current.matches ? gameState.current.matches : amount;
+      gameState.current[player ? "playerMatches" : "computerMatches"] +=
+        lastTaken;
 
       setMatches(gameState.current.matches);
 
       if (player) {
-        setPlayerMatches((prevMatches) => prevMatches + amount);
+        setPlayerMatches(gameState.current.playerMatches);
       } else {
-        setComputerMatches((prevMatches) => prevMatches + amount);
+        setComputerMatches(gameState.current.computerMatches);
       }
-      doSubtractAnimation(amount);
+      doSubtractAnimation(lastTaken);
 
       if (gameState.current.matches === 0) {
-        setGameWinner(playerMatches % 2 === 0 ? "computer" : "player");
+        setGameWinner(
+          gameState.current.playerMatches % 2 === 0 ? "player" : "computer"
+        );
         return;
       }
 

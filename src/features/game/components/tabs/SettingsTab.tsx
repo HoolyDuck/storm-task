@@ -6,17 +6,29 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { useErrorAnimation } from "@/hooks/useErrorAnimation";
 
 export const SettingsTab = () => {
   const { setGameSettings, setActiveTab } = useContext(GameContext);
 
   const [turn, setTurn] = useState(defaultGameSettings.turn);
+  const { doErrorAnimation, isErrorAnimationActive } = useErrorAnimation();
 
   const handleFormSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const matchAmount = formData.get("match-amount") as string;
       const maxMatchesPerTurn = formData.get("max-matches-per-turn") as string;
+
+      if (!matchAmount || !maxMatchesPerTurn) {
+        return;
+      }
+
+      if (parseInt(matchAmount, 10) % 2 === 0) {
+        doErrorAnimation();
+        return;
+      }
 
       setGameSettings({
         matchAmount: parseInt(matchAmount, 10),
@@ -49,7 +61,12 @@ export const SettingsTab = () => {
       </div>
       <Separator />
       <div className="flex flex-col gap-2">
-        <Label htmlFor="match-amount">Match amount</Label>
+        <Label
+          htmlFor="match-amount"
+          className={cn({ "text-red-500 animate-shake": isErrorAnimationActive })}
+        >
+          Match amount (should be an odd number)
+        </Label>
         <Input
           type="number"
           defaultValue={defaultGameSettings.matchAmount}
