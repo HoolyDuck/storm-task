@@ -36,15 +36,13 @@ export const useGame = ({
         return;
       }
 
-      gameState.current.matches =
-        gameState.current.matches - amount > 0
-          ? gameState.current.matches - amount
-          : 0;
-
       const lastTaken =
-        amount > gameState.current.matches ? gameState.current.matches : amount;
-      gameState.current[player ? "playerMatches" : "computerMatches"] +=
-        lastTaken;
+      amount > gameState.current.matches ? gameState.current.matches : amount;
+    gameState.current[player ? "playerMatches" : "computerMatches"] +=
+      lastTaken;
+
+      gameState.current.matches -= lastTaken;
+   
 
       setMatches(gameState.current.matches);
 
