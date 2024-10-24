@@ -50,7 +50,7 @@ export const GameTab = ({
   const handleMatchTake = async (input: string) => {
     const amount = parseInt(input, 10);
 
-    if (amount > maxMatchesPerTurn) {
+    if (amount > maxMatchesPerTurn || amount < 1) {
       doErrorAnimation();
       return;
     }
