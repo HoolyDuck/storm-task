@@ -49,7 +49,7 @@ export const useGame = ({
       doSubtractAnimation(amount);
 
       if (gameState.current.matches === 0) {
-        setGameWinner(player ? "computer" : "player");
+        setGameWinner(playerMatches % 2 === 0 ? "computer" : "player");
         return;
       }
 

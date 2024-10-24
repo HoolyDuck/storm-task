@@ -10,39 +10,37 @@ import { cn } from "@/lib/utils";
 export const SettingsTab = () => {
   const { setGameSettings, setActiveTab } = useContext(GameContext);
 
-  const [matchAmount, setMatchAmount] = useState(
-    defaultGameSettings.matchAmount
-  );
   const [turn, setTurn] = useState(defaultGameSettings.turn);
-  const [maxMatchesPerTurn, setMaxMatchesPerTurn] = useState(
-    defaultGameSettings.maxMatchesPerTurn
+
+  const handleFormSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      const formData = new FormData(e.currentTarget);
+      const matchAmount = formData.get("match-amount") as string;
+      const maxMatchesPerTurn = formData.get("max-matches-per-turn") as string;
+
+      setGameSettings({
+        matchAmount: parseInt(matchAmount, 10),
+        turn,
+        maxMatchesPerTurn: parseInt(maxMatchesPerTurn, 10),
+      });
+      setActiveTab("game");
+    },
+    [setGameSettings, setActiveTab, turn]
   );
 
-  const handleStartGame = useCallback(() => {
-    setGameSettings({
-      matchAmount,
-      turn,
-      maxMatchesPerTurn,
-    });
-    setActiveTab("game");
-  }, [setGameSettings, setActiveTab, matchAmount, turn, maxMatchesPerTurn]);
-
-  const handleMatchAmountChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setMatchAmount(parseInt(e.target.value, 10));
+  const handleSetTurn = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>, turn: "player" | "computer") => {
+      e.preventDefault();
+      setTurn(turn);
     },
-    [setMatchAmount]
-  );
-
-  const handleMaxMatchesPerTurnChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setMaxMatchesPerTurn(parseInt(e.target.value, 10));
-    },
-    [setMaxMatchesPerTurn]
+    [setTurn]
   );
 
   return (
-    <div className="flex flex-col w-10/12 max-w-md gap-4 sm:w-6/12">
+    <form
+      className="flex flex-col w-10/12 max-w-md gap-4 sm:w-6/12"
+      onSubmit={handleFormSubmit}
+    >
       <div>
         <h2 className="text-2xl font-bold">Game Settings</h2>
         <p className="text-gray-500">
@@ -53,17 +51,23 @@ export const SettingsTab = () => {
       <div className="flex flex-col gap-2">
         <Label htmlFor="match-amount">Match amount</Label>
         <Input
-          value={matchAmount}
-          onChange={handleMatchAmountChange}
+          type="number"
+          defaultValue={defaultGameSettings.matchAmount}
           id="match-amount"
+          name="match-amount"
+          min="5"
+          max="500"
         />
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="max-matches-per-turn">Max matches per turn</Label>
         <Input
-          value={maxMatchesPerTurn}
-          onChange={handleMaxMatchesPerTurnChange}
+          type="number"
+          defaultValue={defaultGameSettings.maxMatchesPerTurn}
           id="max-matches-per-turn"
+          name="max-matches-per-turn"
+          min="1"
+          max="20"
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -71,13 +75,13 @@ export const SettingsTab = () => {
 
         <div className={cn("flex", "flex-col", "gap-2", "sm:flex-row")}>
           <Button
-            onClick={() => setTurn("player")}
+            onClick={(e) => handleSetTurn(e, "player")}
             variant={turn === "player" ? "outline" : "secondary"}
           >
             🧑 Player
           </Button>
           <Button
-            onClick={() => setTurn("computer")}
+            onClick={(e) => handleSetTurn(e, "computer")}
             variant={turn === "computer" ? "outline" : "secondary"}
           >
             🤖 Computer
@@ -85,7 +89,7 @@ export const SettingsTab = () => {
         </div>
       </div>
 
-      <Button onClick={handleStartGame}>🔥 Start Game</Button>
-    </div>
+      <Button>🔥 Start Game</Button>
+    </form>
   );
 };

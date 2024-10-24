@@ -5,9 +5,12 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useGame } from "@/features/game/hooks/useGame";
 import { useErrorAnimation } from "@/hooks/useErrorAnimation";
-import { memo, useState } from "react";
+import { useState } from "react";
 
-type GameTabProps = Partial<GameSettings>;
+type GameTabProps = Partial<GameSettings> & {
+  reset: () => void;
+};
+
 const {
   matchAmount: defaultMatchAmount,
   turn: defaultTurn,
@@ -18,6 +21,7 @@ export const GameTab = ({
   matchAmount = defaultMatchAmount,
   turn = defaultTurn,
   maxMatchesPerTurn = defaultMaxMatchesPerTurn,
+  reset,
 }: GameTabProps) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -118,10 +122,11 @@ export const GameTab = ({
         </div>
       </div>
       {gameWinner && (
-        <div className="flex flex-col items-center mt-4">
+        <div className="flex flex-col items-center gap-2">
           <h2 className="text-2xl font-bold">
             {gameWinner === "player" ? "You won!" : "Computer won!"}
           </h2>
+          <Button onClick={reset}>Play again</Button>
         </div>
       )}
     </>

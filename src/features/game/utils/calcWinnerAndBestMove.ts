@@ -21,6 +21,7 @@ const _calcBestMove = (
     toTake <= Math.min(maxMatchesPerTurn, matches);
     toTake++
   ) {
+    // if other player is losing after this move, this is the best move
     const bestMove = _calcBestMove(
       matches - toTake,
       p2Matches,
