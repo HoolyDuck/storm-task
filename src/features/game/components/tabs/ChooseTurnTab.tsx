@@ -1,11 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { GameContext } from "../../context/GameContext";
 import { useCallback, useContext } from "react";
-
-const defaultSettings = {
-  matchAmount: 25,
-  turn: "player",
-};
+import { defaultGameSettings } from "../../utils/constants";
 
 export const ChooseTurnTab = () => {
   const { setGameSettings, setActiveTab } = useContext(GameContext);
@@ -13,7 +9,7 @@ export const ChooseTurnTab = () => {
   const handleTurn = useCallback(
     (turn: "player" | "computer") => {
       setGameSettings({
-        ...defaultSettings,
+        ...defaultGameSettings,
         turn,
       });
       setActiveTab("game");

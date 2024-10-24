@@ -3,6 +3,7 @@ export type Turn = "player" | "computer";
 export type GameSettings = {
   matchAmount: number;
   turn: Turn;
+  maxMatchesPerTurn: number;
 };
 
 export interface GameContextValue {
