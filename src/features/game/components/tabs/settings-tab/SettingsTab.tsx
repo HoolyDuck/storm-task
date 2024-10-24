@@ -64,6 +64,7 @@ export const SettingsTab = () => {
       <Separator />
       <SettingsInput
         isErrorAnimationActive={isErrorAnimationActive}
+        type="number"
         label="Match amount (should be an odd number)"
         id="match-amount"
         name="match-amount"
@@ -73,6 +74,7 @@ export const SettingsTab = () => {
       />
       <SettingsInput
         label="Max matches per turn"
+        type="number"
         id="max-matches-per-turn"
         name="max-matches-per-turn"
         min="1"
