@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { HomeTab } from "./components/tabs/HomeTab";
 import { GameTab } from "./components/tabs/game-tab/GameTab";
 import { ChooseTurnTab } from "./components/tabs/ChooseTurnTab";
-import { SettingsTab } from "./components/tabs/SettingsTab";
+import { SettingsTab } from "./components/tabs/settings-tab/SettingsTab";
 import { useContext, useState } from "react";
 import { GameContext } from "./context/GameContext";
 

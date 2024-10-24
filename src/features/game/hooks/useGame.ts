@@ -88,14 +88,14 @@ export const useGame = ({
         resolve();
       }, 1000);
     });
-  }, [maxMatchesPerTurn, matches, playerMatches, computerMatches, makeMove]);
+  }, [makeMove, maxMatchesPerTurn]);
 
   useEffect(() => {
     if (isComputerFirst.current) {
       makeComputerMove();
       isComputerFirst.current = false;
     }
-  }, []);
+  }, [makeComputerMove]);
 
   const takeMatches = useCallback(
     async (amount: number) => {

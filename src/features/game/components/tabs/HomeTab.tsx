@@ -16,9 +16,11 @@ export const HomeTab = () => {
   }, [setActiveTab]);
 
   return (
-    <div className={cn("flex", "flex-col", "items-center", "gap-2")}>
-      <h1 className={cn("text-4xl", "font-bold")}>🔥 Match Game 🔥</h1>
-      <p className="text-sm text-gray-500">
+    <div className="flex flex-col items-center gap-4">
+      <h1 className={cn("text-3xl", "font-bold", "text-center", "sm:text-4xl")}>
+        🔥 Match Game 🔥
+      </h1>
+      <p className="text-sm text-center text-gray-500">
         Take an even amount of matches to win!
       </p>
       <div className={cn("flex", "space-x-4")}>

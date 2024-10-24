@@ -1,12 +1,14 @@
 import { useCallback, useContext, useState } from "react";
-import { GameContext } from "../../context/GameContext";
-import { Input } from "@/components/ui/input";
-import { defaultGameSettings } from "../../utils/constants";
+import { GameContext } from "../../../context/GameContext";
+
+import { defaultGameSettings } from "../../../utils/constants";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
+
 import { useErrorAnimation } from "@/hooks/useErrorAnimation";
+import { SettingsInput } from "./SettingsInput";
+import { SettingsTurnChoices } from "./SettingsTurnChoices";
 
 export const SettingsTab = () => {
   const { setGameSettings, setActiveTab } = useContext(GameContext);
@@ -37,7 +39,7 @@ export const SettingsTab = () => {
       });
       setActiveTab("game");
     },
-    [setGameSettings, setActiveTab, turn]
+    [setGameSettings, setActiveTab, turn, doErrorAnimation]
   );
 
   const handleSetTurn = useCallback(
@@ -60,51 +62,27 @@ export const SettingsTab = () => {
         </p>
       </div>
       <Separator />
-      <div className="flex flex-col gap-2">
-        <Label
-          htmlFor="match-amount"
-          className={cn({ "text-red-500 animate-shake": isErrorAnimationActive })}
-        >
-          Match amount (should be an odd number)
-        </Label>
-        <Input
-          type="number"
-          defaultValue={defaultGameSettings.matchAmount}
-          id="match-amount"
-          name="match-amount"
-          min="5"
-          max="500"
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="max-matches-per-turn">Max matches per turn</Label>
-        <Input
-          type="number"
-          defaultValue={defaultGameSettings.maxMatchesPerTurn}
-          id="max-matches-per-turn"
-          name="max-matches-per-turn"
-          min="1"
-          max="20"
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <Label>Who starts?</Label>
-
-        <div className={cn("flex", "flex-col", "gap-2", "sm:flex-row")}>
-          <Button
-            onClick={(e) => handleSetTurn(e, "player")}
-            variant={turn === "player" ? "outline" : "secondary"}
-          >
-            🧑 Player
-          </Button>
-          <Button
-            onClick={(e) => handleSetTurn(e, "computer")}
-            variant={turn === "computer" ? "outline" : "secondary"}
-          >
-            🤖 Computer
-          </Button>
-        </div>
-      </div>
+      <SettingsInput
+        isErrorAnimationActive={isErrorAnimationActive}
+        label="Match amount (should be an odd number)"
+        id="match-amount"
+        name="match-amount"
+        min="5"
+        max="500"
+        defaultValue={defaultGameSettings.matchAmount}
+      />
+      <SettingsInput
+        label="Max matches per turn"
+        id="max-matches-per-turn"
+        name="max-matches-per-turn"
+        min="1"
+        max="20"
+        defaultValue={defaultGameSettings.maxMatchesPerTurn}
+      />
+      <SettingsTurnChoices
+        turn={turn}
+        handleSetTurn={handleSetTurn}
+      />
 
       <Button>🔥 Start Game</Button>
     </form>

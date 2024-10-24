@@ -56,9 +56,5 @@ export const calcBestMove = (
     memo
   );
 
-  if (bestMove === -1) {
-    console.log("Computer can't win");
-  }
-
   return bestMove;
 };
